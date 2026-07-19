@@ -55,7 +55,21 @@ Consequences — do NOT re-litigate these:
 
 ## 4. Current Status & Next Actions
 
-### RESUME HERE (2026-07-18 NEWEST — whole-Abyss 3D view CODE-COMPLETE (WA-T1..T6 shipped); awaiting owner in-game verify (WA-T7) then cut v0.1.8-beta)
+### RESUME HERE (2026-07-19 NEWEST — v0.1.8-beta SHIPPED; 2D-map waypoint interaction done; Voxy fork split into its own thread)
+
+**Shipped v0.1.8-beta** (GitHub prerelease `RKTakami/MIA-Voxy-map-mod`, tag `v0.1.8-beta`, asset `mia-maps-0.1.8-beta.jar`; `main`@`bb0a552` pushed): whole-Abyss 3D view (WA-T7 verified in-game — earlier "blank" was just the background build finishing) + descent navigator (shipped EXPERIMENTAL) + reroute Ph1+2/corridor + spheres + off-layer beacon fix + disconnect-crash fix. MIA Maps is **Voxy-agnostic** (compileOnly vs `libs/voxy-stripped.jar`, `fabric.mod.json depends: voxy "*"`; single cross-platform jar).
+
+**2D-map waypoint create + navigate — DONE (inline, committed, installed; not released):** the "waypoints missing on 2D map" report was NOT a display bug — the 6 existing waypoints were user-toggled invisible (working as intended); the real gap was no click interaction on the fullscreen map. Added (spec+plan in `docs/superpowers/…2026-07-19-2d-map-waypoint-interaction…`): `MapGeometry.worldDeltaFromPixel` (pure screen→world inverse, unit-tested) + `AbyssWorldMapScreen.mouseClicked` — **Shift+right-click = create waypoint** (world X/Z from click, Y prefilled from player + editable; reuses `WaypointEditScreen`), **left-click a visible waypoint = navigate** (`RouteService.setDestination`, per-frame hit-boxes) — mirrors the 3D view. Hint line + Help Map-tab updated. HEAD `e90d11e`+interop commits. Installed `mia-maps-0.1.8-beta.jar` (dev build). **Owner in-game verify pending; if good, cut v0.1.9-beta.** Known: a top-down click can't set Y (prefill player Y — intentional); a separate `0,0,0` waypoint-coord-capture bug exists in old data (not addressed).
+
+**Persistence feature SHELVED** (superseded by the Voxy read-only base / offline merge). 
+
+**Voxy fork is now its OWN Claude Code project + thread** (`D:\...\MIA_MAP_VOXY_FORK_project`, own `CLAUDE.md`+docs). Two-way interop via each repo's `docs/INTEROP.md` (broadcast to your own, read the other's at session start). Cross-world hybrid LOD merge was handed to the fork thread (brief `docs/PROPOSED-cross-world-hybrid-lod-merge.md`); fork thread has since implemented `/voxy merge-build`.
+
+**⚠️ INSTANCE STATE (2 threads touched `mods/`):** active Voxy = **STOCK** (fork jar reverted during the ReadonlyCachingLayer mapper-corruption incident); fork `e89df66` disabled as `mods/…-e89df66.bak`; **survive's LOD store was RESET** (fresh; corrupt preserved as `storage.corrupt-2026-07-18`). Full detail in `docs/INTEROP.md`. If resuming MIA in-game, that's why survive's map is sparse.
+
+---
+
+### RESUME HERE (2026-07-18 — whole-Abyss 3D view CODE-COMPLETE (WA-T1..T6 shipped); awaiting owner in-game verify (WA-T7) then cut v0.1.8-beta)
 
 **All code + tests done, build clean, jar installed.** HEAD after WA-T6: `OrbitView`/`HelpContent`/`HelpContentTest` committed; `OrbitScene` whole-mode committed. Jar `mia-maps-0.1.8-beta.jar` built and copied to the instance `mods/` (exactly one present). NOT yet pushed; v0.1.8-beta NOT yet cut.
 
